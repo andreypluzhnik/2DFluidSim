@@ -1,11 +1,6 @@
 #include <glad/glad.h>
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <vector>
-#include "shader.h"
+
 #include "shader_program.h"
       
         
@@ -16,6 +11,7 @@
     ShaderProgram::ShaderProgram(){
          ID = glCreateProgram();
     }
+
     // core functions
     // ------------------------------------------------------------------------
     void ShaderProgram::addShader(const char* path, GLenum type){

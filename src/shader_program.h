@@ -1,5 +1,5 @@
-#ifndef COMPUTE_SHADER_PROGRAM_H
-#define COMPUTE_SHADER_PROGRAM_H
+#ifndef SHADER_PROGRAM_H
+#define SHADER_PROGRAM_H
 
 #include <glad/glad.h>
 
@@ -15,7 +15,6 @@ class ShaderProgram{
         
         ShaderProgram();
         ShaderProgram(std::vector<Shader> shader_list);
-
 
         // add shader program
         void addShader(const char* path, GLenum type);

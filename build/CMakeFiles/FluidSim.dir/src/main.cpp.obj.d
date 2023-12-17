@@ -1,5 +1,6 @@
 CMakeFiles/FluidSim.dir/src/main.cpp.obj: \
  C:\Users\andre\WORK\FluidSim\src\main.cpp \
+ C:\Users\andre\WORK\FluidSim\src\fluid_sim.h \
  C:/Users/andre/WORK/FluidSim/include/glad/glad.h \
  C:/Users/andre/WORK/FluidSim/include/KHR/khrplatform.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include/stdint.h \
@@ -158,18 +159,37 @@ CMakeFiles/FluidSim.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/12.1.0/bits/uniform_int_dist.h \
  C:/msys64/mingw64/include/c++/12.1.0/pstl/glue_algorithm_defs.h \
  C:/msys64/mingw64/include/c++/12.1.0/pstl/execution_defs.h \
- C:\Users\andre\WORK\FluidSim\src\stbi_include.h \
- C:/Users/andre/WORK/FluidSim/include/stb_image/stb_image.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include/stdarg.h \
- C:/msys64/mingw64/include/stdarg.h \
- C:/msys64/mingw64/include/_mingw_stdarg.h \
- C:/msys64/mingw64/include/string.h \
- C:/msys64/mingw64/include/sec_api/string_s.h \
- C:/msys64/mingw64/include/assert.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include/emmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include/xmmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include/mmintrin.h \
- C:\Users\andre\WORK\FluidSim\src\shader.h \
+ C:/msys64/mingw64/include/c++/12.1.0/memory \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_raw_storage_iter.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/align.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bit \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/uses_allocator.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/unique_ptr.h \
+ C:/msys64/mingw64/include/c++/12.1.0/tuple \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/shared_ptr.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/shared_ptr_base.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/allocated_ptr.h \
+ C:/msys64/mingw64/include/c++/12.1.0/ext/aligned_buffer.h \
+ C:/msys64/mingw64/include/c++/12.1.0/ext/concurrence.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/shared_ptr_atomic.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_base.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_lockfree_defines.h \
+ C:/msys64/mingw64/include/c++/12.1.0/backward/auto_ptr.h \
+ C:/msys64/mingw64/include/c++/12.1.0/pstl/glue_memory_defs.h \
+ C:\Users\andre\WORK\FluidSim\src\splat_queue.h \
+ C:/msys64/mingw64/include/c++/12.1.0/queue \
+ C:/msys64/mingw64/include/c++/12.1.0/deque \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_deque.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/deque.tcc \
+ C:/msys64/mingw64/include/c++/12.1.0/vector \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_queue.h \
+ C:\Users\andre\WORK\FluidSim\src\vec2.h \
+ C:\Users\andre\WORK\FluidSim\src\bitmap.h \
+ C:\Users\andre\WORK\FluidSim\src\shader_program.h \
  C:/msys64/mingw64/include/c++/12.1.0/fstream \
  C:/msys64/mingw64/include/c++/12.1.0/bits/codecvt.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/basic_file.h \
@@ -177,18 +197,4 @@ CMakeFiles/FluidSim.dir/src/main.cpp.obj: \
  C:/msys64/mingw64/include/c++/12.1.0/bits/fstream.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/sstream \
  C:/msys64/mingw64/include/c++/12.1.0/bits/sstream.tcc \
- C:\Users\andre\WORK\FluidSim\src\bitmap.h \
- C:\Users\andre\WORK\FluidSim\src\shader_program.h \
- C:/msys64/mingw64/include/c++/12.1.0/vector \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
- C:\Users\andre\WORK\FluidSim\src\splat_queue.h \
- C:/msys64/mingw64/include/c++/12.1.0/queue \
- C:/msys64/mingw64/include/c++/12.1.0/deque \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_deque.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/deque.tcc \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_queue.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/uses_allocator.h \
- C:\Users\andre\WORK\FluidSim\src\vec2.h
+ C:\Users\andre\WORK\FluidSim\src\shader.h

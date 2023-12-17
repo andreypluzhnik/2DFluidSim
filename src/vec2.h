@@ -16,6 +16,10 @@ class vec2 {
         double u() const {return e[0];}
         double v() const {return e[1];}
 
+        double* pu() {return &e[0];}
+        double* pv() {return &e[1];}
+
+
         vec2 operator-() const {return vec2(-e[0], -e[1]); }
         double operator[](int i) const {return e[i];}
         double& operator[](int i) {return e[i];}
