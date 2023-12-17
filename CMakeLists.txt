@@ -1,9 +1,7 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(FluidSim VERSION 1.0.0)
 cmake_policy(SET CMP0072 NEW)
 find_package(OpenGL REQUIRED)
-
-
 
 
 # Add source files

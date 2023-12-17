@@ -165,6 +165,30 @@ include/glad/glad.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\GLAD.dir\build.make CMakeFiles/GLAD.dir/include/glad/glad.c.s
 .PHONY : include/glad/glad.c.s
 
+src/fluid_sim.obj: src/fluid_sim.cpp.obj
+.PHONY : src/fluid_sim.obj
+
+# target to build an object file
+src/fluid_sim.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/fluid_sim.cpp.obj
+.PHONY : src/fluid_sim.cpp.obj
+
+src/fluid_sim.i: src/fluid_sim.cpp.i
+.PHONY : src/fluid_sim.i
+
+# target to preprocess a source file
+src/fluid_sim.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/fluid_sim.cpp.i
+.PHONY : src/fluid_sim.cpp.i
+
+src/fluid_sim.s: src/fluid_sim.cpp.s
+.PHONY : src/fluid_sim.s
+
+# target to generate assembly for a file
+src/fluid_sim.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/fluid_sim.cpp.s
+.PHONY : src/fluid_sim.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -237,6 +261,30 @@ src/shader_program.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/shader_program.cpp.s
 .PHONY : src/shader_program.cpp.s
 
+src/splat_queue.obj: src/splat_queue.cpp.obj
+.PHONY : src/splat_queue.obj
+
+# target to build an object file
+src/splat_queue.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/splat_queue.cpp.obj
+.PHONY : src/splat_queue.cpp.obj
+
+src/splat_queue.i: src/splat_queue.cpp.i
+.PHONY : src/splat_queue.i
+
+# target to preprocess a source file
+src/splat_queue.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/splat_queue.cpp.i
+.PHONY : src/splat_queue.cpp.i
+
+src/splat_queue.s: src/splat_queue.cpp.s
+.PHONY : src/splat_queue.s
+
+# target to generate assembly for a file
+src/splat_queue.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\FluidSim.dir\build.make CMakeFiles/FluidSim.dir/src/splat_queue.cpp.s
+.PHONY : src/splat_queue.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -250,6 +298,9 @@ help:
 	@echo ... include/glad/glad.obj
 	@echo ... include/glad/glad.i
 	@echo ... include/glad/glad.s
+	@echo ... src/fluid_sim.obj
+	@echo ... src/fluid_sim.i
+	@echo ... src/fluid_sim.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
@@ -259,6 +310,9 @@ help:
 	@echo ... src/shader_program.obj
 	@echo ... src/shader_program.i
 	@echo ... src/shader_program.s
+	@echo ... src/splat_queue.obj
+	@echo ... src/splat_queue.i
+	@echo ... src/splat_queue.s
 .PHONY : help
 
 
