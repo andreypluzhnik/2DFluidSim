@@ -39,7 +39,7 @@
 
         std::cout<< "SHADER " << shader_name << " SUCCESSFULLY READ" << std::endl;
         const char* cShaderCode = shaderCode.c_str();
-        //compile shader
+
 
 
         // compute shader
