@@ -12,10 +12,10 @@ void main(){
     ivec2 tex_size = textureSize(in_field, 0);
     ivec2 pos = ivec2(gl_GlobalInvocationID.xy); 
     
-    ivec2 right = clamp(pos + ivec2(1, 0), ivec2(0,0), tex_size.xy - 1);
-    ivec2 left = clamp(pos - ivec2(1, 0), ivec2(0,0), tex_size.xy - 1);
-    ivec2 top = clamp(pos + ivec2(0, 1), ivec2(0,0), tex_size.xy - 1);
-    ivec2 bot = clamp(pos - ivec2(0, 1), ivec2(0,0), tex_size.xy - 1);
+    ivec2 right = clamp(pos + ivec2(1, 0), ivec2(0,0), tex_size.xy);
+    ivec2 left = clamp(pos - ivec2(1, 0), ivec2(0,0), tex_size.xy);
+    ivec2 top = clamp(pos + ivec2(0, 1), ivec2(0,0), tex_size.xy);
+    ivec2 bot = clamp(pos - ivec2(0, 1), ivec2(0,0), tex_size.xy);
 
 
     float diff_x = texelFetch(in_field, right, 0).x - texelFetch(in_field, left, 0).x;
