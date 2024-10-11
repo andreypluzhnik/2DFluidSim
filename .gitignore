@@ -1,3 +1,5 @@
 archive/
 .vscode/
 main.ccp.bac
+build/
+CMakeFiles/

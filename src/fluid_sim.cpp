@@ -397,7 +397,7 @@ int FluidSim::runSim(){
         std::swap(velocity_field[0], velocity_field[1]);
 
 
-        bindTexture(0, color_field[0]);
+        bindTexture(0, color_field[1]);
         vfShader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

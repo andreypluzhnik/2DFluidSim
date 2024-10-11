@@ -22,11 +22,11 @@ enum InitialCondition {
 
 class FluidSim {
     public:
-        const unsigned int SIM_WIDTH = 256;
-        const unsigned int SIM_HEIGHT = 256;
+        const unsigned int SIM_WIDTH = 512;
+        const unsigned int SIM_HEIGHT = 512;
         const float DT = 1;
         const float DL = 1;
-        const float VISCOSITY = 0.008;
+        const float VISCOSITY = 0.08;
         const int DIFFUSION_CYCLES = 30;
         const int PRESSURE_CYCLES = 30;
 

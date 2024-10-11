@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.0.0)
 project(FluidSim VERSION 1.0.0)
 cmake_policy(SET CMP0072 NEW)
 find_package(OpenGL REQUIRED)
+
+
 
 
 # Add source files
@@ -34,7 +36,7 @@ add_library(GLAD "include/glad/glad.c")
 
 #include glfw3
 #unify libraries under one variable
-set(LIBS glfw3 GLAD OpenGL::GL)
+set(LIBS glfw GLAD OpenGL::GL)
 
 # executable
 add_executable(FluidSim ${HEADER_FILES} ${SOURCE_FILES})

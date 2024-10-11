@@ -11,8 +11,6 @@
 
 
    
-    unsigned int ID = 5;
-
     Shader::Shader(const char* path, GLenum type) : shader_name(path){
         // 1. retrieve the vertex/fragment source code from filePath
         std::string shaderCode;
@@ -43,8 +41,8 @@
 
 
         // compute shader
-        shader_ID = glCreateShader(type);
-        glShaderSource(shader_ID, 1, &cShaderCode, NULL);
+        shader_ID = glCreateShader(type); // assign shader ID
+        glShaderSource(shader_ID, 1, &cShaderCode, NULL); 
         glCompileShader(shader_ID);
     }
 

@@ -44,15 +44,13 @@ class SplatQueue{
             win_height = new_win_height;
         }
 
- 
-
     
 
     private:
         bool start_trail = false;
         splat cur_splat;
         std::queue<splat> queue; 
-        
+        size_t view = 0;
 
 
 

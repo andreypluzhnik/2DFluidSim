@@ -2,6 +2,7 @@
 
 #include "splat_queue.h"
 
+
 SplatQueue::SplatQueue(int sim_width, int sim_height) : SIM_WIDTH(sim_width), SIM_HEIGHT(sim_height) {
 
     cur_splat.i_pos[0] = -1;
