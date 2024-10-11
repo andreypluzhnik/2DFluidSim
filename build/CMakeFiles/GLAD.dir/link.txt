@@ -1,2 +1,2 @@
-C:\msys64\mingw64\bin\ar.exe qc libGLAD.a CMakeFiles/GLAD.dir/include/glad/glad.c.obj
-C:\msys64\mingw64\bin\ranlib.exe libGLAD.a
+/usr/bin/ar qc libGLAD.a CMakeFiles/GLAD.dir/include/glad/glad.c.o
+/usr/bin/ranlib libGLAD.a

@@ -1,3 +1,1 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\FluidSim.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe qc CMakeFiles\FluidSim.dir/objects.a @CMakeFiles\FluidSim.dir\objects1.rsp
-C:\msys64\mingw64\bin\c++.exe -Wl,--whole-archive CMakeFiles\FluidSim.dir/objects.a -Wl,--no-whole-archive -o FluidSim.exe -Wl,--out-implib,libFluidSim.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\FluidSim.dir\linkLibs.rsp
+/usr/bin/c++ -g -rdynamic CMakeFiles/FluidSim.dir/src/fluid_sim.cpp.o CMakeFiles/FluidSim.dir/src/main.cpp.o CMakeFiles/FluidSim.dir/src/shader.cpp.o CMakeFiles/FluidSim.dir/src/shader_program.cpp.o CMakeFiles/FluidSim.dir/src/splat_queue.cpp.o -o FluidSim   -L/usr/lib/gcc/x86_64-linux-gnu/12  -lglfw libGLAD.a /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so 
