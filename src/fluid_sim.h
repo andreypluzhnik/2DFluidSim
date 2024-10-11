@@ -29,6 +29,7 @@ class FluidSim {
         const float VISCOSITY = 0.08;
         const int DIFFUSION_CYCLES = 30;
         const int PRESSURE_CYCLES = 30;
+        const float VORTICITY = 40;
 
         // shader file paths
         const char* vertexPath = "vertex_shader.glsl";
@@ -37,6 +38,8 @@ class FluidSim {
         const char* cAdvectPath = "advection.glsl";
         const char* cDiffusionPath = "diffusion.glsl";
         const char* cDivergencePath = "divergence.glsl";
+        const char* cCurlPath = "curl.glsl";
+        const char* cVorticityPath = "vorticity.glsl";
         const char* cPressure_fieldProjectPath = "pressure_projection.glsl";
         const char* cForceSplatPath = "force_splat.glsl";
         const char* cColorSplatPath = "color_splat.glsl";

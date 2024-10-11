@@ -171,6 +171,20 @@ int FluidSim::runSim(){
     cDivergenceShader.compileShaders();
     //*****************************************************//
 
+
+    //***************** Curl Shader *****************//
+    ShaderProgram cCurlShader;
+    cCurlShader.addShader(cCurlPath, GL_COMPUTE_SHADER);
+    cCurlShader.compileShaders();
+    //*****************************************************//
+
+    //***************** Vorticity Shader *****************//
+    ShaderProgram cVorticityShader;
+    cVorticityShader.addShader(cVorticityPath, GL_COMPUTE_SHADER);
+    cVorticityShader.compileShaders();
+    //****************************************************//
+
+
     //***************** Pressure Field Projection Shader *****************//
     ShaderProgram cPressureProjectShader;
     cPressureProjectShader.addShader(cPressure_fieldProjectPath, GL_COMPUTE_SHADER);
@@ -234,7 +248,7 @@ int FluidSim::runSim(){
 
     
 
-    GLuint color_field[2], velocity_field[3], pressure_field[2], div_velocity_field;
+    GLuint color_field[2], velocity_field[3], pressure_field[2], div_velocity_field, curl_velocity_field;
 
     color_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
     color_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
@@ -244,7 +258,7 @@ int FluidSim::runSim(){
     velocity_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     velocity_field[2] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     div_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
-
+    curl_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     
 
     
@@ -268,7 +282,8 @@ int FluidSim::runSim(){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-  
+        // advect dye step
+        //----------------
         cAdvectShader.use();
         cAdvectShader.setFloat("dt", DT);
 
@@ -279,6 +294,9 @@ int FluidSim::runSim(){
         glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
+        
+        // advect step
+        //------------
         cAdvectShader.use();
         cAdvectShader.setFloat("dt", DT);
 
@@ -290,6 +308,28 @@ int FluidSim::runSim(){
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
 
+        // curl step
+        //---------------
+
+        cCurlShader.use();
+        cCurlShader.setFloat("dl", DL);
+        bindTexture(0, velocity_field[2]);
+        bindImageTexture(1, curl_velocity_field);
+
+        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+        // vorticity step
+        //---------------
+        
+        cVorticityShader.use();
+        cVorticityShader.setFloat("vorticity", VORTICITY);
+        cVorticityShader.setFloat("DT", DT);
+        bindTexture(0, curl_velocity_field);
+        bindTexture(0, velocity_field[2]);
+        
+
+ 
 
         float alpha = DL * DL / (VISCOSITY * DT);
         float beta = 4 + alpha;
