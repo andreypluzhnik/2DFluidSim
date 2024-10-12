@@ -72,6 +72,41 @@ class bitmap {
             }
         }
 
+        void horizontal_jets(float r1, float g1, float b1, float r2, float g2, float b2, int y_spacing, int thickness){
+            y_spacing = int(clamp(y_spacing, 0, HEIGHT));
+
+            
+            for(size_t row = 0; row <  HEIGHT; ++row){
+                for(size_t col = 0; col <  WIDTH; ++col){
+                    if(row >= 0.5 * (HEIGHT + y_spacing) && row <= 0.5 * (HEIGHT + y_spacing) + thickness){
+                        write_color_to_row_col(row, col, r2, g2, b2, 1.0);
+
+                    }else if(row <= 0.5 * (HEIGHT - y_spacing) && row >= 0.5 * (HEIGHT - y_spacing) - thickness){
+                        write_color_to_row_col(row, col, r1, g1, b1, 1.0);
+                    }else if(col <= 0.5 * WIDTH){
+                        write_color_to_row_col(row, col, 0.01, 0.0, 0.0, 1.0);
+                    }else{
+                        write_color_to_row_col(row, col, -0.01, 0.0, 0.0, 1.0);
+                    }
+                }
+            }
+
+        }
+
+        void rectangle(float r, float g, float b, int top, int left, int w, int h){
+            
+            
+            for(size_t row = 0; row <  HEIGHT; ++row){
+                for(size_t col = 0; col <  WIDTH; ++col){
+                    if(row >= top && row <= top + h && col >= left && col <= left + w){
+                        write_color_to_row_col(row, col, r, g , b, 1.0);
+                    }else{
+                        write_color_to_row_col(row, col, 0.0, 0.0, 0.0, 1.0);
+                    }
+                }
+            }
+
+        }
         
 
         // Maps the function aexp(-x sigma) in an angular spread around a specified point 

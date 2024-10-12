@@ -17,19 +17,21 @@
 
 
 enum InitialCondition {
-    RANDOM, VERTICAL_BARS, MONOCHROME, VERTICAL_SPRAY, ZERO
+    RANDOM, VERTICAL_BARS, MONOCHROME, VERTICAL_SPRAY, ZERO, HORIZONTAL_JET, RECTANGLE
 };
 
 class FluidSim {
     public:
-        const unsigned int SIM_WIDTH = 1024;
-        const unsigned int SIM_HEIGHT = 1024;
+        const unsigned int SIM_WIDTH = 1280;
+        const unsigned int SIM_HEIGHT = 720;
         const float DT = 1;
         const float DL = 1;
-        const float VISCOSITY = 0.02;
+        const float VISCOSITY = 0.001;
+        bool ENABLE_DIFFUSION = true;
+        bool ENABLE_BG_FORCE = true;
         const int DIFFUSION_CYCLES = 50;
-        const int PRESSURE_CYCLES = 100;
-        const float VORTICITY = 0.1;
+        const int PRESSURE_CYCLES = 70;
+        const float VORTICITY = 0.4;
 
         const uint block_size_x = 32;
         const uint block_size_y = 32;
@@ -59,6 +61,8 @@ class FluidSim {
         // splat coloring
         unsigned int pathLength = 0.001;
 
+        // constants for jacobi iteration
+        float alpha, beta;
 
     public:
         FluidSim();

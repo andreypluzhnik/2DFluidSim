@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/home/andrey/Projects/FluidSim/include
 
-C_FLAGS = 
+C_FLAGS = -g
 

@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/andrey/Projects/FluidSim/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -g
 

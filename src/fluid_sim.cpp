@@ -50,6 +50,9 @@ GLFWwindow* FluidSim::glfwWindow(){
     // --------------------------------------
     glfwSetWindowUserPointer(window, this);
 
+    // glfw: assign position on screen
+    glfwSetWindowPos(window, 900, 400);
+
     // SplateQueue: initialize SplatQueue dimensions
     // -------------------------------
     SplatQueue::resize(winWidthHeight[0], winWidthHeight[1]);
@@ -88,6 +91,12 @@ GLuint FluidSim::genTexture2D(const size_t width, const size_t height, InitialCo
             break;
         case(VERTICAL_SPRAY):
             color_map->decaying_vertical_spray(0.001 , 4 / color_map->get_height() , 90, int(color_map->get_width() * 0.5), -30);
+            break;
+        case(RECTANGLE):
+            color_map->rectangle(0.0, 0.5, 1.0, int(color_map->get_height() * 1.0/3), 10, int(color_map->get_width())- 50, int(color_map->get_height() * 1.0/3));
+            break;
+        case(HORIZONTAL_JET):
+            color_map->horizontal_jets(0.05, 0.02, 0.0, -0.05, -0.02, 0.0, int(color_map->get_height() * 1.0/3), int(color_map->get_height() * 1.0/3));
             break;
 
     }
@@ -250,10 +259,10 @@ int FluidSim::runSim(){
     
 
     GLuint color_field[2], velocity_field[3], pressure_field[2], div_velocity_field, curl_velocity_field,
-            force_field;
+            force_field, bg_force_field;
 
-    color_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
-    color_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
+    color_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, RECTANGLE);
+    color_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, RECTANGLE);
     pressure_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     pressure_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     velocity_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, RANDOM);
@@ -262,7 +271,7 @@ int FluidSim::runSim(){
     div_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     curl_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     force_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
-
+    bg_force_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, HORIZONTAL_JET);
 
     
     
@@ -306,23 +315,27 @@ int FluidSim::runSim(){
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
  
-        float alpha = DL * DL / (VISCOSITY * DT);
-        float beta = 4 + alpha;
-        
-        cDiffusionShader.use();
-        cDiffusionShader.setFloat("alpha", alpha);
-        cDiffusionShader.setFloat("beta", beta);
-        cDiffusionShader.setInt("boundary_sign", 1);
-        for(int cycle = 0; cycle < DIFFUSION_CYCLES; ++cycle){
-            bindTexture(0, velocity_field[0]);
-            bindImageTexture(1, velocity_field[1]);
-            bindTexture(2, velocity_field[2]);
-            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
-            glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-            std::swap(velocity_field[0], velocity_field[1]);
+        if(ENABLE_DIFFUSION){
+            alpha = DL * DL / (VISCOSITY * DT);
+            beta = 4 + alpha;
+            
+            cDiffusionShader.use();
+            cDiffusionShader.setFloat("alpha", alpha);
+            cDiffusionShader.setFloat("beta", beta);
+            cDiffusionShader.setInt("boundary_sign", 1);
+            for(int cycle = 0; cycle < DIFFUSION_CYCLES; ++cycle){
+                bindTexture(0, velocity_field[0]);
+                bindImageTexture(1, velocity_field[1]);
+                bindTexture(2, velocity_field[2]);
+                glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
+                glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+                std::swap(velocity_field[0], velocity_field[1]);
 
+            }
+
+        }else{
+            std::swap(velocity_field[1], velocity_field[2]);
         }
-
 
         // force splat
         //---------------  
@@ -388,6 +401,15 @@ int FluidSim::runSim(){
         glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
+        if(ENABLE_BG_FORCE){
+            cForceShader.use();
+            cForceShader.setFloat("dt", DT);
+            bindTexture(0, bg_force_field);
+            bindImageTexture(1, velocity_field[0]);
+            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
+            glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+        }
+
         
         // pressure projection
         //--------------------
@@ -411,7 +433,7 @@ int FluidSim::runSim(){
         cDiffusionShader.use();
         cDiffusionShader.setFloat("alpha", alpha);
         cDiffusionShader.setFloat("beta", beta);
-        cDiffusionShader.setInt("boundary_sign", 1);
+        cDiffusionShader.setInt("boundary_sign", -1);
         
         for(int cycle = 0; cycle < PRESSURE_CYCLES; ++cycle){
 
