@@ -8,6 +8,7 @@ FluidSim::FluidSim(){
     colorQueue = new SplatQueue(SIM_WIDTH, SIM_HEIGHT);
     winWidthHeight[0] = SIM_WIDTH;
     winWidthHeight[1] = SIM_HEIGHT;
+    std::cout<< VORTICITY << std::endl;
 };
 
 FluidSim::FluidSim(float dt, float dl, float viscosity, const int diffusion_cycles, const int pressure_cycles) : DT(dt), DL(dl), 
@@ -248,7 +249,8 @@ int FluidSim::runSim(){
 
     
 
-    GLuint color_field[2], velocity_field[3], pressure_field[2], div_velocity_field, curl_velocity_field;
+    GLuint color_field[2], velocity_field[3], pressure_field[2], div_velocity_field, curl_velocity_field,
+            force_field;
 
     color_field[0] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
     color_field[1] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, VERTICAL_BARS);
@@ -259,11 +261,7 @@ int FluidSim::runSim(){
     velocity_field[2] = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     div_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
     curl_velocity_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
-    
-
-    
-
-    GLuint force_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
+    force_field = genTexture2D(SIM_WIDTH, SIM_HEIGHT, ZERO);
 
 
     
@@ -291,7 +289,7 @@ int FluidSim::runSim(){
         bindImageTexture(1, color_field[1]);
         bindTexture(2, velocity_field[0]);
         std::swap(color_field[0], color_field[1]);
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
         
@@ -304,46 +302,22 @@ int FluidSim::runSim(){
         bindImageTexture(1, velocity_field[2]);
         bindTexture(2, velocity_field[0]);
 
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-
-
-        // curl step
-        //---------------
-
-        cCurlShader.use();
-        cCurlShader.setFloat("dl", DL);
-        bindTexture(0, velocity_field[2]);
-        bindImageTexture(1, curl_velocity_field);
-
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
-        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-
-        // vorticity step
-        //---------------
-        
-        cVorticityShader.use();
-        cVorticityShader.setFloat("vorticity", VORTICITY);
-        cVorticityShader.setFloat("DT", DT);
-        bindTexture(0, curl_velocity_field);
-        bindTexture(0, velocity_field[2]);
-        
 
  
-
         float alpha = DL * DL / (VISCOSITY * DT);
         float beta = 4 + alpha;
         
-        
+        cDiffusionShader.use();
+        cDiffusionShader.setFloat("alpha", alpha);
+        cDiffusionShader.setFloat("beta", beta);
+        cDiffusionShader.setInt("boundary_sign", 1);
         for(int cycle = 0; cycle < DIFFUSION_CYCLES; ++cycle){
-            cDiffusionShader.use();
-            cDiffusionShader.setFloat("alpha", alpha);
-            cDiffusionShader.setFloat("beta", beta);
-            cDiffusionShader.setInt("boundary_sign", -1);
             bindTexture(0, velocity_field[0]);
             bindImageTexture(1, velocity_field[1]);
             bindTexture(2, velocity_field[2]);
-            glDispatchCompute(SIM_WIDTH/32, SIM_HEIGHT/32, 1);
+            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
             glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
             std::swap(velocity_field[0], velocity_field[1]);
 
@@ -351,22 +325,24 @@ int FluidSim::runSim(){
 
 
         // force splat
+        //---------------  
         while(!(forceQueue->isEmpty())){
 
             splat forceSplat = forceQueue->pop();
             cForceSplatShader.use();
             cForceSplatShader.setFloat("dt", DT);
-            cForceSplatShader.setFloat("intensity", 4);
+            cForceSplatShader.setFloat("intensity", 6);
             cForceSplatShader.setVec2f("center", float(forceSplat.f_pos[0]), float(forceSplat.f_pos[1]));
             cForceSplatShader.setVec2f("direction", float(forceSplat.dir[0]), float(forceSplat.dir[1]));
-            cForceSplatShader.setFloat("spatial_decay", 0.5);
+            cForceSplatShader.setFloat("spatial_decay", 0.4);
             bindTexture(0, velocity_field[0]);
             bindImageTexture(1, velocity_field[1]);
-            glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
             glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
-            std::swap(velocity_field[0], velocity_field[1]);
         }
-
+        std::swap(velocity_field[0], velocity_field[1]);
+        // color splat
+        //---------------  
         while(!(colorQueue->isEmpty())){
             float r,g,b = 0;
             spectral_color(r, g, b);
@@ -377,26 +353,49 @@ int FluidSim::runSim(){
             cColorSplatShader.setVec2f("center", float(colorSplat.i_pos[0]), float(colorSplat.i_pos[1]));
             cColorSplatShader.setVec3f("color", r, g, b);
             bindImageTexture(0, color_field[0]);
-            glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
             glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
         }
+
+
+        // curl step
+        //---------------
+        cCurlShader.use();
+        cCurlShader.setFloat("dl", DL);
+        bindTexture(0, velocity_field[0]);
+        bindImageTexture(1, curl_velocity_field);
+
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+        // vorticity step
+        //---------------
+
+        cVorticityShader.use();
+        cVorticityShader.setFloat("vorticity", VORTICITY);
+        bindTexture(0, curl_velocity_field);
+        bindImageTexture(1, force_field);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
+        glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
         
         // force field
+        //------------
         cForceShader.use();
         cForceShader.setFloat("dt", DT);
         bindTexture(0, force_field);
         bindImageTexture(1, velocity_field[0]);
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
         
-        
+        // pressure projection
+        //--------------------
         cDivergenceShader.use();
         cDivergenceShader.setFloat("dl", DL);
         bindTexture(0, velocity_field[0]);
         bindImageTexture(1, div_velocity_field);
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
 
@@ -419,20 +418,20 @@ int FluidSim::runSim(){
             bindTexture(0, pressure_field[0]);
             bindImageTexture(1, pressure_field[1]);
             bindTexture(2, div_velocity_field);
-            glDispatchCompute(SIM_WIDTH/32, SIM_HEIGHT/32, 1);
+            glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
             glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
             std::swap(pressure_field[0], pressure_field[1]);
 
         }
 
-
+       
         cPressureProjectShader.use();
         cPressureProjectShader.setFloat("dl", DL);
         bindTexture(0, velocity_field[0]);
         bindTexture(1, pressure_field[0]);
         bindImageTexture(2, velocity_field[1]);
-        glDispatchCompute(SIM_WIDTH, SIM_HEIGHT, 1);
+        glDispatchCompute(SIM_WIDTH/block_size_x, SIM_HEIGHT/block_size_y, 1);
         glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
         std::swap(velocity_field[0], velocity_field[1]);
 

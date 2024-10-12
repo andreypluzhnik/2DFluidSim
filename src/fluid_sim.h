@@ -22,14 +22,17 @@ enum InitialCondition {
 
 class FluidSim {
     public:
-        const unsigned int SIM_WIDTH = 512;
-        const unsigned int SIM_HEIGHT = 512;
+        const unsigned int SIM_WIDTH = 1024;
+        const unsigned int SIM_HEIGHT = 1024;
         const float DT = 1;
         const float DL = 1;
-        const float VISCOSITY = 0.08;
-        const int DIFFUSION_CYCLES = 30;
-        const int PRESSURE_CYCLES = 30;
-        const float VORTICITY = 40;
+        const float VISCOSITY = 0.02;
+        const int DIFFUSION_CYCLES = 50;
+        const int PRESSURE_CYCLES = 100;
+        const float VORTICITY = 0.1;
+
+        const uint block_size_x = 32;
+        const uint block_size_y = 32;
 
         // shader file paths
         const char* vertexPath = "vertex_shader.glsl";
