@@ -73,15 +73,15 @@ CMakeFiles/GLAD.dir/include/glad/glad.c.o: CMakeFiles/GLAD.dir/flags.make
 CMakeFiles/GLAD.dir/include/glad/glad.c.o: ../include/glad/glad.c
 CMakeFiles/GLAD.dir/include/glad/glad.c.o: CMakeFiles/GLAD.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrey/Projects/FluidSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/GLAD.dir/include/glad/glad.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/GLAD.dir/include/glad/glad.c.o -MF CMakeFiles/GLAD.dir/include/glad/glad.c.o.d -o CMakeFiles/GLAD.dir/include/glad/glad.c.o -c /home/andrey/Projects/FluidSim/include/glad/glad.c
+	/usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/GLAD.dir/include/glad/glad.c.o -MF CMakeFiles/GLAD.dir/include/glad/glad.c.o.d -o CMakeFiles/GLAD.dir/include/glad/glad.c.o -c /home/andrey/Projects/FluidSim/include/glad/glad.c
 
 CMakeFiles/GLAD.dir/include/glad/glad.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GLAD.dir/include/glad/glad.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrey/Projects/FluidSim/include/glad/glad.c > CMakeFiles/GLAD.dir/include/glad/glad.c.i
+	/usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrey/Projects/FluidSim/include/glad/glad.c > CMakeFiles/GLAD.dir/include/glad/glad.c.i
 
 CMakeFiles/GLAD.dir/include/glad/glad.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GLAD.dir/include/glad/glad.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrey/Projects/FluidSim/include/glad/glad.c -o CMakeFiles/GLAD.dir/include/glad/glad.c.s
+	/usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrey/Projects/FluidSim/include/glad/glad.c -o CMakeFiles/GLAD.dir/include/glad/glad.c.s
 
 # Object files for target GLAD
 GLAD_OBJECTS = \
