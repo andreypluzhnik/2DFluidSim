@@ -1,4 +1,0 @@
-/home/andrey/Projects/FluidSim/build/CMakeFiles/GLAD.dir
-/home/andrey/Projects/FluidSim/build/CMakeFiles/FluidSim.dir
-/home/andrey/Projects/FluidSim/build/CMakeFiles/edit_cache.dir
-/home/andrey/Projects/FluidSim/build/CMakeFiles/rebuild_cache.dir
