@@ -84,9 +84,9 @@ class bitmap {
                     }else if(row <= 0.5 * (HEIGHT - y_spacing) && row >= 0.5 * (HEIGHT - y_spacing) - thickness){
                         write_color_to_row_col(row, col, r1, g1, b1, 1.0);
                     }else if(col <= 0.5 * WIDTH){
-                        write_color_to_row_col(row, col, 0.01, 0.0, 0.0, 1.0);
+                        write_color_to_row_col(row, col, 0, 0.0, 0.0, 1.0);
                     }else{
-                        write_color_to_row_col(row, col, -0.01, 0.0, 0.0, 1.0);
+                        write_color_to_row_col(row, col, 0, 0.0, 0.0, 1.0);
                     }
                 }
             }

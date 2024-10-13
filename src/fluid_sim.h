@@ -26,12 +26,12 @@ class FluidSim {
         const unsigned int SIM_HEIGHT = 720;
         const float DT = 1;
         const float DL = 1;
-        const float VISCOSITY = 0.001;
+        const float VISCOSITY = 3;
         bool ENABLE_DIFFUSION = true;
-        bool ENABLE_BG_FORCE = true;
-        const int DIFFUSION_CYCLES = 50;
-        const int PRESSURE_CYCLES = 70;
-        const float VORTICITY = 0.4;
+        bool ENABLE_BG_FORCE = false;
+        const int DIFFUSION_CYCLES = 200;
+        const int PRESSURE_CYCLES = 200;
+        const float VORTICITY = 4;
 
         const uint block_size_x = 32;
         const uint block_size_y = 32;
