@@ -29,13 +29,13 @@ Advection is performed with a semi-implicit scheme, which is explained in Stam 1
 Both diffusion and Helmholtz decomposition steps furnish second order linear PDEs which can be realized by sparse matrices. The program approximates them numerically using Jacobi iteration. There are other sparse matrix solvers out there: Conjugate Gradient Descent, LU/QR/Cholesky decomposition, to name a few, but Jacobi iteration seems to do a good enough job to simulate a fluid like appearance.
 
 ### Vorticity Confinement
-As a final step to capture fine scale fluctuations the program considers the vorticity confinement term from [Fedkiw et. al 2001](https://web.stanford.edu/class/cs237d/smoke.pdf) as an extra exernal force:
+To capture fine scale fluctuations, the program considers the vorticity confinement term from [Fedkiw et. al 2001](https://web.stanford.edu/class/cs237d/smoke.pdf) as an extra exernal force:
 
 $$F_{conf} = \frac{\epsilon}{\lvert \eta \rvert} (\eta \times \omega)$$
 
 Where $\omega = \nabla \times u$ and $\eta = \nabla \lvert \omega \rvert$.
 
-## Other Useful References
+## Other Useful Resources
 
 - [GPU Gems 1](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu)
 - [Fluid Dynamics Book](https://link.springer.com/book/10.1007/978-1-4612-0883-9)(Provides a derivation and discussion Helmholtz Decomposition)
