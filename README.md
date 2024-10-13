@@ -11,7 +11,7 @@ $$\frac{\partial u}{\partial t} = - (u \cdot \nabla)u + \gamma \nabla^2 u + \fra
 
 Since the program so far only treats incompressible fluids, it is stipulated that the divergence of the velocity field vanishes, i.e. 
 
-$$\nabla u = 0$$
+$$\nabla \cdot u = 0$$
 
 ## Solving the N-S Equations
 The program follows an algorithm similar to the one laid out in [Stam 1999](https://pages.cs.wisc.edu/~chaol/data/cs777/stam-stable_fluids.pdf). Essentially the [Helmholtz Decomposition Theorem](https://en.wikipedia.org/wiki/Helmholtz_decomposition) tells us that we can solve for a compressible field $w$, which decomposes into $u$ and $\nabla p$, and subsequently subtract out $\nabla p$ to obtain $u = w - \nabla p$. 
