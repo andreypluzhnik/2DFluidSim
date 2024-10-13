@@ -38,5 +38,5 @@ Where $\omega = \nabla \times u$ and $\eta = \nabla \lvert \omega \rvert$.
 ## Other Useful Resources
 
 - [GPU Gems 1](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu)
-- [Fluid Dynamics Book](https://link.springer.com/book/10.1007/978-1-4612-0883-9)(Provides a derivation and discussion Helmholtz Decomposition)
+- [Fluid Dynamics Book](https://link.springer.com/book/10.1007/978-1-4612-0883-9)(Provides a discussion of Helmholtz Decomposition)
 - [Reference and Tutorial for OpenGL](https://learnopengl.com/)
