@@ -26,7 +26,7 @@ The intermediate field $w$ is calculated by 'splitting' the N-S equation into se
 Finally the incompressible flow is determined with the help of the aforementioned Helmholtz decomposition step. 
 
 Advection is performed with a semi-implicit scheme, which is explained in Stam 1999. 
-Both diffusion and Helmholtz decomposition steps furnish second order linear PDEs which can be realized by sparse matrices. The program approximates them numerically using Jacobi iteration. There are other sparse matrix solvers out there: Conjugate Gradient Descent, LU/QR/Cholesky decomposition, to name a few, but Jacobi iteration seems to do a good enough job to simulate a fluid like appearance.
+Both diffusion and Helmholtz decomposition steps furnish second order linear PDEs which can be realized by sparse matrices. The program approximates them numerically using Jacobi iteration. There are other sparse matrix solvers out there: Conjugate Gradient Descent, Cholesky preconditioning and LU/QR decomposition, to name a few, but Jacobi iteration seems to do a good enough job to simulate a fluid like appearance.
 
 ### Vorticity Confinement
 To capture fine scale fluctuations, the program considers the vorticity confinement term from [Fedkiw et. al 2001](https://web.stanford.edu/class/cs237d/smoke.pdf) as an extra exernal force:
